@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    restart: unless-stopped
+    networks:
+      - db-network
+    environment:
+      MYSQL_ROOT_PASSWORD: 'raffa2020'
+    ports:
+      - '3307:3307'
+    expose:
+      - 3307
+    volumes:
+      - data:/data/MYSQL
+
+  postgres:
+    image: postgres
+    container_name: postgres
+    restart: unless-stopped
+    networks:
+      - db-network
+    environment:
+      POSTGRES_USER: 'root'
+      POSTGRES_PASSWORD: 'raffa2020'
+    ports:
+      - '5432:5432'
+    expose:
+      - 5432
+    volumes:
+      - data:/data/PG
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: always
+    ports:
+      - '27017:27017'
+    expose:
+      - 27017
+    volumes:
+      - data:/data/MONGO
+
+volumes:
+  data:
+    driver: local
+
+networks:
+  db-network:
+    name: db-network
